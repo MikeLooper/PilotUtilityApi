@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<OutputType>Library</OutputType>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PilotUtiltyApi.Domain\PilotUtilityApi.Domain.csproj" />
+    <ProjectReference Include="..\PilotUtiltyApi.Repositories\PilotUtilityApi.Repositories.csproj" />
+    <ProjectReference Include="..\PilotUtiltyApi.Shared\PilotUtilityApi.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

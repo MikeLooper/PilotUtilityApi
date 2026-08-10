@@ -1,0 +1,6 @@
+.vs
+bin/
+logs/
+obj/
+temp/
+TestResults/
