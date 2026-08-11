@@ -1,5 +1,5 @@
 ---
-description: Unit test creation and maintenance standards for NUnit test work in this repository.
+description: Unit test creation and maintenance standards for NUnit test work in this solution.
 applyTo: "test/**/*.cs"
 ---
 

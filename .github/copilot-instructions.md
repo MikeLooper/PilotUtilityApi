@@ -1,7 +1,10 @@
 # Copilot Instructions: Repository-Wide Guidance
 
 ## Purpose
-This file contains cross-cutting guidance for the repository.
+This file contains cross-cutting guidance for the solution.
+
+## Architecture Instructions
+Detailed architecture rules are defined in `.github/instructions/architecture.instructions.md`.
 
 ## Unit Test Instructions
 Detailed unit test creation and maintenance rules are defined in `.github/instructions/unit-tests.instructions.md`.
