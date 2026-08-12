@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using PilotUtilityApi.Shared.Configuration;
+using System.Text.Json.Serialization;
 
 namespace PilotUtilityApi.Domain.Models.Dto
 {
@@ -13,11 +14,11 @@ namespace PilotUtilityApi.Domain.Models.Dto
 		/// </summary>
 		public string? ApiVersion { get; set; }
 
-		///// <summary>
-		///// Gets or sets the application configuration object.
-		///// </summary>
-		//[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-		//public IApplicationConfiguration? ApplicationConfiguration { get; set; }
+		/// <summary>
+		/// Gets or sets the application configuration object.
+		/// </summary>
+		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+		public IApplicationConfiguration? ApplicationConfiguration { get; set; }
 
 		/// <summary>
 		/// Gets or sets the build version of the application.
@@ -43,10 +44,8 @@ namespace PilotUtilityApi.Domain.Models.Dto
 			return $"{nameof(this.Name)}={this.Name}, " +
 				$"{nameof(this.ApiVersion)}={this.ApiVersion}, " +
 				$"{nameof(this.BuildVersion)}={this.BuildVersion}, " +
-				$"{nameof(this.DeployDate)}={this.DeployDate}, "
-				//+
-				//$"{nameof(this.ApplicationConfiguration)}=[{this.ApplicationConfiguration}]"
-				;
+				$"{nameof(this.DeployDate)}={this.DeployDate}, " +
+				$"{nameof(this.ApplicationConfiguration)}=[{this.ApplicationConfiguration}]";
 		}
 	}
 }

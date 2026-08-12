@@ -14,6 +14,13 @@ config:
         username: ""
         password: ""
       bypassProxy: ""
+
+request:
+  headers:
+    - name: Accept
+      value: application/json
+    - name: ApiVersion
+      value: "1"
 bundled: false
 extensions:
   bruno:

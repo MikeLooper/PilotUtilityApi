@@ -1,5 +1,7 @@
 using PilotUtilityApi.Shared.Configuration.Models;
 using PilotUtilityApi.Shared.Exceptions;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace PilotUtilityApi.Shared.Configuration
@@ -10,14 +12,47 @@ namespace PilotUtilityApi.Shared.Configuration
 	public class ApplicationConfiguration : IApplicationConfiguration
 	{
 		/// <summary>
+		/// Instatiate a <see cref="ApplicationConfiguration"/> object.
+		/// </summary>
+		public ApplicationConfiguration()
+		{
+			this.DataSources = new List<DataSourceConfiguration>();
+			this.OpenApi = new OpenApiConfiguration();
+		}
+
+		/// <summary>
+		/// Instantiate a <see cref="ApplicationConfiguration"/> object.
+		/// </summary>
+		/// <param name="sourceConfiguration">
+		/// A source configuration object to copy values from.
+		/// </param>
+		/// <param name="suppressSensitiveValues">
+		/// A flag that indicates whether sensitive values should be suppressed when copying values from the source configuration.
+		/// </param>
+		public ApplicationConfiguration(
+			IApplicationConfiguration sourceConfiguration,
+			bool suppressSensitiveValues = false)
+			: this()
+		{
+			this.Initialize(sourceConfiguration, suppressSensitiveValues);
+		}
+
+		/// <summary>
 		/// Gets or sets the data sources configuration.
 		/// </summary>
-		public DataSourceConfiguration[] DataSources { get; set; } = [];
+		public List<DataSourceConfiguration> DataSources { get; set; }
 
 		/// <summary>
 		/// Gets or sets the OpenApi configuration.
 		/// </summary>
 		public OpenApiConfiguration OpenApi { get; set; } = new OpenApiConfiguration();
+
+		/// <inheritdoc/>>
+		public override string ToString()
+		{
+			return $"{nameof(this.DataSources)}=[{this.DataSources}], " +
+				$"{nameof(this.OpenApi)}=[{this.OpenApi}]";
+		}
 
 		/// <summary>
 		/// Validates the configuration.
@@ -27,7 +62,7 @@ namespace PilotUtilityApi.Shared.Configuration
 		/// </exception>
 		public void Validate()
 		{
-			if (DataSources == null || DataSources.Length == 0)
+			if (DataSources == null || DataSources.Count == 0)
 			{
 				throw new ConfigurationException("No data sources configured.");
 			}
@@ -60,6 +95,33 @@ namespace PilotUtilityApi.Shared.Configuration
 			{
 				throw new ConfigurationException("Active data source must have a DataSource (database name) specified.");
 			}
+		}
+
+		/// <summary>
+		/// Initialize the current object with values from the source configuration.
+		/// </summary>
+		/// <param name="sourceConfiguration">
+		/// The source <see cref="ApplicationConfiguration"/> to copy values from.
+		/// </param>
+		/// <param name="suppressSensitiveValues">
+		/// A flag that indicates whether sensitive values should be suppressed when copying values from the source configuration.
+		/// </param>
+		protected void Initialize(
+			IApplicationConfiguration sourceConfiguration,
+			bool suppressSensitiveValues = false)
+		{
+			if (sourceConfiguration == null)
+			{
+				throw new ArgumentException($"Invalid argument: {nameof(sourceConfiguration)}");
+			}
+
+#pragma warning disable CS8601 // Possible null reference assignment.
+			this.DataSources = sourceConfiguration.DataSources
+				?.Select(s => new DataSourceConfiguration(s, suppressSensitiveValues))
+				.ToList();
+#pragma warning restore CS8601 // Possible null reference assignment.
+
+			this.OpenApi = new OpenApiConfiguration(sourceConfiguration.OpenApi, suppressSensitiveValues);
 		}
 	}
 }

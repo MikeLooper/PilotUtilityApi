@@ -5,7 +5,7 @@
 
 	<!-- OpenApi -->
 	<OpenApiGenerateDocumentsOptions>--openapi-version OpenApi3_1</OpenApiGenerateDocumentsOptions>
-	<UserSecretsId>9b8addf2-6945-4c57-a386-37e2503a0f05</UserSecretsId>
+	<UserSecretsId>9b8addf2-6945-4c57-a386-37e2503a0fff</UserSecretsId>
 </PropertyGroup>
 
 <ItemGroup>

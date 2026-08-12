@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using PilotUtilityApi.Domain.Models.Dto;
+using PilotUtilityApi.Shared.Configuration;
 using PilotUtilityApi.Shared.Utilities;
 using System;
 using System.Threading.Tasks;
@@ -14,24 +16,24 @@ namespace PilotUtilityApi.Web.Controllers
 	/// </summary>
 	[ApiVersionNeutral]
 	[AllowAnonymous]
-
+	[ApiController]
 	public class SystemController : ControllerBase
 	{
-		///// <summary>
-		///// Instantiate a <see cref="SystemController"/> object.
-		///// </summary>
-		///// <param name="applicationConfiguration">
-		///// A configuration object.
-		///// </param>
-		//public SystemController(IApplicationConfiguration applicationConfiguration)
-		//{
-		//	this.ApplicationConfiguration = applicationConfiguration;
-		//}
+		/// <summary>
+		/// Instantiate a <see cref="SystemController"/> object.
+		/// </summary>
+		/// <param name="applicationConfiguration">
+		/// A configuration object.
+		/// </param>
+		public SystemController(IApplicationConfiguration applicationConfiguration)
+		{
+			this.ApplicationConfiguration = applicationConfiguration;
+		}
 
-		///// <summary>
-		///// Gets the application configuration object.
-		///// </summary>
-		//protected IApplicationConfiguration ApplicationConfiguration { get; }
+		/// <summary>
+		/// Gets the application configuration object.
+		/// </summary>
+		protected IApplicationConfiguration ApplicationConfiguration { get; }
 
 		/// <summary>
 		/// Return an OK.
@@ -60,21 +62,20 @@ namespace PilotUtilityApi.Web.Controllers
 		[Route("about")]
 		[ProducesResponseType<AboutResponse>(StatusCodes.Status200OK)]
 		public IActionResult About(
-			[FromQuery(Name = "show-details")] bool showDetails = false)
+			[FromQuery(Name = "show-details"), BindRequired] bool showDetails = false)
 		{
-			//var name = this.ApplicationConfiguration.OpenApi.Title;
-			//var appVersion = this.ApplicationConfiguration.OpenApi.Version;
+			var name = this.ApplicationConfiguration.OpenApi.Title;
+			var appVersion = this.ApplicationConfiguration.OpenApi.Version;
 			var buildVersion = FileUtilities.GetApplicationVersion();
 			var deployDate = Environment.GetEnvironmentVariable("DEPLOY_DATE");
 
-			var aboutResponse  = new AboutResponse
+			var aboutResponse = new AboutResponse
 			{
-				//Name = name,
-				//ApiVersion = appVersion,
+				Name = name,
+				ApiVersion = appVersion,
 				BuildVersion = buildVersion,
-				DeployDate = deployDate
-				//,
-				//ApplicationConfiguration = showDetails ? new ApplicationConfiguration(this.ApplicationConfiguration, true) : null
+				DeployDate = deployDate,
+				ApplicationConfiguration = showDetails ? new ApplicationConfiguration(this.ApplicationConfiguration, true) : null
 			};
 
 			return this.Ok(aboutResponse);

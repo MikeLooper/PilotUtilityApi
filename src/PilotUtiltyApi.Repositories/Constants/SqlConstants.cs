@@ -20,9 +20,9 @@ BEGIN
 END
 
 -- Customers: Remove test row
-IF EXISTS (SELECT 1 FROM Customers WHERE city = 'Test City' AND companyName = 'Test Company')
+IF EXISTS (SELECT 1 FROM Customers WHERE city = 'Test City' AND companyname = 'Test Company')
 BEGIN
-	DELETE FROM Customers WHERE city = 'Test City' AND companyName = 'Test Company';
+	DELETE FROM Customers WHERE city = 'Test City' AND companyname = 'Test Company';
 	SET @DeletedCount = @DeletedCount + @@ROWCOUNT;
 END
 
@@ -34,23 +34,23 @@ BEGIN
 END
 
 -- OrderDetails: Remove test row
-IF EXISTS (SELECT 1 FROM OrderDetails WHERE orderID = 10248 AND productID = 12 AND unitPrice = 99.0000)
+IF EXISTS (SELECT 1 FROM [Order Details] WHERE orderid = 10248 AND productid = 12 AND unitprice = 99.0000)
 BEGIN
-	DELETE FROM OrderDetails WHERE orderID = 10248 AND productID = 12 AND unitPrice = 99.0000;
+	DELETE FROM [Order Details] WHERE orderid = 10248 AND productid = 12 AND unitprice = 99.0000;
 	SET @DeletedCount = @DeletedCount + @@ROWCOUNT;
 END
 
 -- Orders: Remove test row
-IF EXISTS (SELECT 1 FROM Orders WHERE shipCity = 'Test City' AND shipName = 'Test Name')
+IF EXISTS (SELECT 1 FROM Orders WHERE shipcity = 'Test City' AND shipName = 'Test Name')
 BEGIN
-	DELETE FROM Orders WHERE shipCity = 'Test City' AND shipName = 'Test Name';
+	DELETE FROM Orders WHERE shipcity = 'Test City' AND shipName = 'Test Name';
 	SET @DeletedCount = @DeletedCount + @@ROWCOUNT;
 END
 
 -- Products: Remove test row
-IF EXISTS (SELECT 1 FROM Products WHERE productName = 'Test Product' AND quantityPerUnit = 'lots')
+IF EXISTS (SELECT 1 FROM Products WHERE productname = 'Test Product' AND quantityperunit = 'lots')
 BEGIN
-	DELETE FROM Products WHERE productName = 'Test Product' AND quantityPerUnit = 'lots';
+	DELETE FROM Products WHERE productname = 'Test Product' AND quantityperunit = 'lots';
 	SET @DeletedCount = @DeletedCount + @@ROWCOUNT;
 END
 
@@ -62,9 +62,9 @@ BEGIN
 END
 
 -- Suppliers: Remove test row
-IF EXISTS (SELECT 1 FROM Suppliers WHERE companyName = 'Test Company' AND contactTitle = 'Test Title')
+IF EXISTS (SELECT 1 FROM Suppliers WHERE companyname = 'Test Company' AND contacttitle = 'Test Title')
 BEGIN
-	DELETE FROM Suppliers WHERE companyName = 'Test Company' AND contactTitle = 'Test Title';
+	DELETE FROM Suppliers WHERE companyname = 'Test Company' AND contacttitle = 'Test Title';
 	SET @DeletedCount = @DeletedCount + @@ROWCOUNT;
 END
 
@@ -83,42 +83,42 @@ DECLARE
 	temp_count INT;
 BEGIN
 	-- Categories: Remove test row
-	DELETE FROM Categories WHERE ""categoryName"" = 'Test Cat' AND description = 'Test Category';
+	DELETE FROM categories WHERE ""categoryname"" = 'Test Cat' AND description = 'Test Category';
 	GET DIAGNOSTICS temp_count = ROW_COUNT;
 	deleted_count := deleted_count + temp_count;
 
 	-- Customers: Remove test row
-	DELETE FROM Customers WHERE city = 'Test City' AND ""companyName"" = 'Test Company';
+	DELETE FROM customers WHERE city = 'Test City' AND ""companyname"" = 'Test Company';
 	GET DIAGNOSTICS temp_count = ROW_COUNT;
 	deleted_count := deleted_count + temp_count;
 
 	-- Employees: Remove test row
-	DELETE FROM Employees WHERE ""firstName"" = 'Test First' AND ""lastName"" = 'Test Last';
+	DELETE FROM employees WHERE ""firstname"" = 'Test First' AND ""lastname"" = 'Test Last';
 	GET DIAGNOSTICS temp_count = ROW_COUNT;
 	deleted_count := deleted_count + temp_count;
 
 	-- OrderDetails: Remove test row
-	DELETE FROM ""OrderDetails"" WHERE ""orderID"" = 10248 AND ""productID"" = 12 AND ""unitPrice"" = 99.0000;
+	DELETE FROM ""orderdetails"" WHERE ""orderid"" = 10248 AND ""productid"" = 12 AND ""unitprice"" = 99.0000::money;
 	GET DIAGNOSTICS temp_count = ROW_COUNT;
 	deleted_count := deleted_count + temp_count;
 
 	-- Orders: Remove test row
-	DELETE FROM Orders WHERE ""shipCity"" = 'Test City' AND ""shipName"" = 'Test Name';
+	DELETE FROM orders WHERE ""shipcity"" = 'Test City' AND ""shipname"" = 'Test Name';
 	GET DIAGNOSTICS temp_count = ROW_COUNT;
 	deleted_count := deleted_count + temp_count;
 
 	-- Products: Remove test row
-	DELETE FROM Products WHERE ""productName"" = 'Test Product' AND ""quantityPerUnit"" = 'lots';
+	DELETE FROM products WHERE ""productname"" = 'Test Product' AND ""quantityperunit"" = 'lots';
 	GET DIAGNOSTICS temp_count = ROW_COUNT;
 	deleted_count := deleted_count + temp_count;
 
 	-- Shippers: Remove test row
-	DELETE FROM Shippers WHERE companyname = 'Test Shipper' AND phone = '(503) 555-9831';
+	DELETE FROM shippers WHERE companyname = 'Test Shipper' AND phone = '(503) 555-9831';
 	GET DIAGNOSTICS temp_count = ROW_COUNT;
 	deleted_count := deleted_count + temp_count;
 
 	-- Suppliers: Remove test row
-	DELETE FROM Suppliers WHERE ""companyName"" = 'Test Company' AND ""contactTitle"" = 'Test Title';
+	DELETE FROM suppliers WHERE ""companyname"" = 'Test Company' AND ""contacttitle"" = 'Test Title';
 	GET DIAGNOSTICS temp_count = ROW_COUNT;
 	deleted_count := deleted_count + temp_count;
 

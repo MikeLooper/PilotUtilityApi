@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PilotUtilityApi.Shared.Api.Middleware;
 using PilotUtilityApi.Shared.Logging.Extensions;
+using Scalar.AspNetCore;
 using System;
 
 namespace PilotUtilityApi.Shared.Api.Extensions
@@ -67,12 +68,15 @@ namespace PilotUtilityApi.Shared.Api.Extensions
 
 			// custom
 			webApp.LoggingWebApplication();
-			//webApp.OpenApiWebApplication();
-			//webApp.SwaggerWebApplication();
-
 			webApp.UseMiddleware<UnhandledExceptionMiddleware>();
 
 			// standard
+			webApp.MapOpenApi();
+			webApp.MapScalarApiReference(options =>
+			{
+				options.Layout = ScalarLayout.Classic;
+			});
+
 			try
 			{
 				webApp.MapControllers();
@@ -110,13 +114,11 @@ namespace PilotUtilityApi.Shared.Api.Extensions
 			// standard
 			builder.Services.AddControllers();
 			builder.Services.AddVersioning();
+			builder.Services.AddEndpointsApiExplorer();
+			builder.Services.AddOpenApi();
 
 			// custom
 			builder.LoggingWebApplicationBuilder();
-			//builder.OpenApiWebApplicationBuilder();
-
-			// services
-			//builder.Services.AddTransient<ISqlBuilder, SqlBuilder>();
 		}
 	}
 }

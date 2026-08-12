@@ -1,4 +1,5 @@
 using PilotUtilityApi.Shared.Configuration.Models;
+using System.Collections.Generic;
 
 namespace PilotUtilityApi.Shared.Configuration
 {
@@ -10,7 +11,7 @@ namespace PilotUtilityApi.Shared.Configuration
 		/// <summary>
 		/// Gets the data sources configuration.
 		/// </summary>
-		DataSourceConfiguration[] DataSources { get; }
+		List<DataSourceConfiguration> DataSources { get; }
 
 		/// <summary>
 		/// Gets the OpenApi configuration.

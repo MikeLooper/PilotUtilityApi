@@ -69,7 +69,7 @@ namespace PilotUtilityApi.Repositories.Repositories
 					nameof(ResetTestingAsync),
 					correlationId.CorrelationId);
 
-				throw new UserException(correlationId.UserMessage, ex);
+				throw new UserException(correlationId.UserMessage);
 			}
 		}
 

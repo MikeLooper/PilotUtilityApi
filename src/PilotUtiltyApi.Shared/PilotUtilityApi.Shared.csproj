@@ -7,7 +7,6 @@
 
   <ItemGroup>
 	<PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="10.2.1" />
-	<PackageReference Include="Microsoft.AspNetCore.Mvc.ApiExplorer" Version="2.3.11" />
 	<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.10" />
 	<PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.10" />
 	<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
@@ -25,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Constants\" />
+	<Folder Include="Constants\" />
   </ItemGroup>
 
 </Project>

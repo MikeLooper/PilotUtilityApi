@@ -13,6 +13,7 @@ namespace PilotUtilityApi.Web.Controllers
 	/// </summary>
 	[ApiVersionNeutral]
 	[AllowAnonymous]
+	[ApiController]
 	public class TestingController : ControllerBase
 	{
 		private readonly ITestingService testingService;
