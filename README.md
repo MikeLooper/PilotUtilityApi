@@ -189,6 +189,42 @@ The `Application.DataSources` array defines database connections. Each data sour
 }
 ```
 
+### Local Development
+
+For local development and testing, the following User Secret can be used:
+```
+{
+	"Application": {
+		"DataSources": [
+			{
+				"Active": true,
+				"ConnectTimeout": 30,
+				"DataSourceName": "NorthWind_SQL",
+				"DataSource": "NorthWind",
+				"DataSourceType": "SqlServer",
+				"Host": "localhost",
+				"Password": "Hjm$435yVt7a",
+				"Port": 1433,
+				"UserName": "DevUser",
+				"Schema": "dbo"
+			},
+			{
+				"Active": false,
+				"ConnectTimeout": 30,
+				"DataSourceName": "NorthWind_Pgs",
+				"DataSource": "northwind",
+				"DataSourceType": "PostgreSQL",
+				"Host": "localhost",
+				"Password": "Pwo_698UVtra",
+				"Port": 5432,
+				"UserName": "DevUser",
+				"Schema": "pilot"
+			}
+		]
+	}
+}
+```
+
 ### Switching Databases
 
 To switch between SQL Server and PostgreSQL:
