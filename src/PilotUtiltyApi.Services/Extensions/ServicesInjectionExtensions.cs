@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using PilotUtilityApi.Shared.Configuration;
 using System;
 
 namespace PilotUtilityApi.Services.Extensions
@@ -33,11 +36,11 @@ namespace PilotUtilityApi.Services.Extensions
 			}
 
 			// read configuration
-			//var applicationSettings = new ApplicationConfiguration();
-			//builder.Configuration.GetSection("Application").Bind(applicationSettings);
-			//applicationSettings.Validate();
+			var applicationSettings = new ApplicationConfiguration();
+			builder.Configuration.GetSection("Application").Bind(applicationSettings);
+			applicationSettings.Validate();
 
-			//builder.Services.AddSingleton<IApplicationConfiguration>(applicationSettings);
+			builder.Services.AddSingleton<IApplicationConfiguration>(applicationSettings);
 		}
 
 		/// <summary>
@@ -65,9 +68,9 @@ namespace PilotUtilityApi.Services.Extensions
 			}
 
 			// register services
-			//builder.Services.AddTransient<ITestingRepository, TestingRepository>();
+			builder.Services.AddTransient<Repositories.Repositories.ITestingRepository, Repositories.Repositories.TestingRepository>();
 
-			//builder.Services.AddTransient<ITestingService, TestingService>();
+			builder.Services.AddTransient<Services.ITestingService, Services.TestingService>();
 		}
 	}
 }

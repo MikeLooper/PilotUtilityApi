@@ -6,9 +6,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PilotUtiltyApi.Domain\PilotUtilityApi.Domain.csproj" />
-    <ProjectReference Include="..\PilotUtiltyApi.Repositories\PilotUtilityApi.Repositories.csproj" />
-    <ProjectReference Include="..\PilotUtiltyApi.Shared\PilotUtilityApi.Shared.csproj" />
+	<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.1" />
+	<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<ProjectReference Include="..\PilotUtiltyApi.Domain\PilotUtilityApi.Domain.csproj" />
+	<ProjectReference Include="..\PilotUtiltyApi.Repositories\PilotUtilityApi.Repositories.csproj" />
+	<ProjectReference Include="..\PilotUtiltyApi.Shared\PilotUtilityApi.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<Folder Include="Constants\" />
   </ItemGroup>
 
 </Project>

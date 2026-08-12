@@ -48,6 +48,7 @@ applyTo: "**.cs"
 
 - Construction and behavior of the API endpoints should follow REST API best practices.
 - Favor maintainability, testability, clear separation of concerns, and clean architecture principles.
+- Class files can only have one (1) class per file.
 
 ## Guardrails:
 

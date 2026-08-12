@@ -38,6 +38,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PilotUtilityApi.Shared.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PilotUtilityApi.Web.Tests", "test\PilotUtiltyApi.Web.Tests\PilotUtilityApi.Web.Tests.csproj", "{F8057494-10C0-128E-CCFC-DA3907C1CF11}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AI", "AI", "{C3A1DF21-1F4F-4CCF-88CD-4EEE3F36CCE9}"
+	ProjectSection(SolutionItems) = preProject
+		.github\instructions\architecture.instructions.md = .github\instructions\architecture.instructions.md
+		.github\copilot-instructions.md = .github\copilot-instructions.md
+		.github\instructions\unit-tests.instructions.md = .github\instructions\unit-tests.instructions.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +106,7 @@ Global
 		{38D28EB1-72BF-4C6D-2505-2952955B27D8} = {ED5AA911-4308-41A1-B065-0450957B670B}
 		{742AC2AB-68C2-1FDA-DA28-6F22A1257C93} = {ED5AA911-4308-41A1-B065-0450957B670B}
 		{F8057494-10C0-128E-CCFC-DA3907C1CF11} = {ED5AA911-4308-41A1-B065-0450957B670B}
+		{C3A1DF21-1F4F-4CCF-88CD-4EEE3F36CCE9} = {731B674F-12B0-48F8-8CC2-E0A79C7760DD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {08F10AAE-C616-4E11-AEB0-67109267F156}
