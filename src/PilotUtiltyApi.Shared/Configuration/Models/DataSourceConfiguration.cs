@@ -47,11 +47,6 @@ namespace PilotUtilityApi.Shared.Configuration.Models
 		public string DataSource { get; set; }
 
 		/// <summary>
-		/// Gets or sets the data source name.
-		/// </summary>
-		public string DataSourceName { get; set; }
-
-		/// <summary>
 		/// Gets or sets the data source type (e.g., SqlServer, PostgreSQL).
 		/// </summary>
 		public string DataSourceType { get; set; }
@@ -87,7 +82,6 @@ namespace PilotUtilityApi.Shared.Configuration.Models
 			return $"{nameof(this.Active)}={this.Active}, " +
 				$"{nameof(this.ConnectTimeout)}={this.ConnectTimeout}, " +
 				$"{nameof(this.DataSource)}={this.DataSource}, " +
-				$"{nameof(this.DataSourceName)}={this.DataSourceName}, " +
 				$"{nameof(this.DataSourceType)}={this.DataSourceType}, " +
 				$"{nameof(this.Host)}={this.Host}, " +
 				$"{nameof(this.Password)}={(string.IsNullOrEmpty(this.Password) ? "--Empty--" : "[Redacted]")}, " +
@@ -117,7 +111,6 @@ namespace PilotUtilityApi.Shared.Configuration.Models
 			this.Active = sourceConfiguration.Active;
 			this.ConnectTimeout = sourceConfiguration.ConnectTimeout;
 			this.DataSource = sourceConfiguration.DataSource;
-			this.DataSourceName = sourceConfiguration.DataSourceName;
 			this.DataSourceType = sourceConfiguration.DataSourceType;
 			this.Host = sourceConfiguration.Host;
 			this.Password = suppressSensitiveValues? "[Redacted]" : sourceConfiguration.Password;

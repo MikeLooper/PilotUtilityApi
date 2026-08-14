@@ -118,8 +118,8 @@ PilotUtilityApi/
    ```
 
 3. Access the API:
-   - **Swagger UI**: https://localhost:7000/swagger (or the port shown in console)
-   - **Health Check**: https://localhost:7000/healthcheck
+   - **Swagger UI**: https://localhost:58701/swagger (or the port shown in console)
+   - **Health Check**: https://localhost:58401/healthcheck
 
 ## Configuration
 
@@ -133,7 +133,6 @@ The `Application.DataSources` array defines database connections. Each data sour
 |----------|------|-------------|---------|
 | `Active` | boolean | Whether this data source is currently active. **Only one can be true.** | `false` |
 | `ConnectTimeout` | integer | Connection timeout in seconds | `30` |
-| `DataSourceName` | string | Friendly name for the data source | - |
 | `DataSource` | string | Database name | - |
 | `DataSourceType` | string | Database type: `SqlServer` or `PostgreSQL` | - |
 | `Host` | string | Database server hostname or IP address | `localhost` |
@@ -151,11 +150,10 @@ The `Application.DataSources` array defines database connections. Each data sour
       {
         "Active": true,
         "ConnectTimeout": 30,
-        "DataSourceName": "NorthWind_SQL",
         "DataSource": "NorthWind",
         "DataSourceType": "SqlServer",
         "Host": "localhost",
-        "Password": "your-password",
+        "Password": "<user password>",
         "Port": 1433,
         "UserName": "DevUser",
         "Schema": "dbo"
@@ -163,11 +161,10 @@ The `Application.DataSources` array defines database connections. Each data sour
       {
         "Active": false,
         "ConnectTimeout": 30,
-        "DataSourceName": "NorthWind_Pgs",
         "DataSource": "northwind",
         "DataSourceType": "PostgreSQL",
         "Host": "localhost",
-        "Password": "your-password",
+        "Password": "<user password>",
         "Port": 5432,
         "UserName": "DevUser",
         "Schema": "pilot"
@@ -194,34 +191,32 @@ The `Application.DataSources` array defines database connections. Each data sour
 For local development and testing, the following User Secret can be used:
 ```
 {
-	"Application": {
-		"DataSources": [
-			{
-				"Active": true,
-				"ConnectTimeout": 30,
-				"DataSourceName": "NorthWind_SQL",
-				"DataSource": "NorthWind",
-				"DataSourceType": "SqlServer",
-				"Host": "localhost",
-				"Password": "Hjm$435yVt7a",
-				"Port": 1433,
-				"UserName": "DevUser",
-				"Schema": "dbo"
-			},
-			{
-				"Active": false,
-				"ConnectTimeout": 30,
-				"DataSourceName": "NorthWind_Pgs",
-				"DataSource": "northwind",
-				"DataSourceType": "PostgreSQL",
-				"Host": "localhost",
-				"Password": "Pwo_698UVtra",
-				"Port": 5432,
-				"UserName": "DevUser",
-				"Schema": "pilot"
-			}
-		]
-	}
+    "Application": {
+        "DataSources": [
+            {
+                "Active": true,
+                "ConnectTimeout": 30,
+                "DataSource": "NorthWind",
+                "DataSourceType": "SqlServer",
+                "Host": "localhost",
+                "Password": "<user password>",
+                "Port": 1433,
+                "UserName": "DevUser",
+                "Schema": "dbo"
+            },
+            {
+                "Active": false,
+                "ConnectTimeout": 30,
+                "DataSource": "northwind",
+                "DataSourceType": "PostgreSQL",
+                "Host": "localhost",
+                "Password": "<user password>",
+                "Port": 5432,
+                "UserName": "DevUser",
+                "Schema": "pilot"
+            }
+        ]
+    }
 }
 ```
 

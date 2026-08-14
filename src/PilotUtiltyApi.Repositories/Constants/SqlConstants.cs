@@ -83,32 +83,32 @@ DECLARE
 	temp_count INT;
 BEGIN
 	-- Categories: Remove test row
-	DELETE FROM categories WHERE ""categoryname"" = 'Test Cat' AND description = 'Test Category';
+	DELETE FROM categories WHERE categoryname = 'Test Cat' AND description = 'Test Category';
 	GET DIAGNOSTICS temp_count = ROW_COUNT;
 	deleted_count := deleted_count + temp_count;
 
 	-- Customers: Remove test row
-	DELETE FROM customers WHERE city = 'Test City' AND ""companyname"" = 'Test Company';
+	DELETE FROM customers WHERE city = 'Test City' AND companyname = 'Test Company';
 	GET DIAGNOSTICS temp_count = ROW_COUNT;
 	deleted_count := deleted_count + temp_count;
 
 	-- Employees: Remove test row
-	DELETE FROM employees WHERE ""firstname"" = 'Test First' AND ""lastname"" = 'Test Last';
+	DELETE FROM employees WHERE firstname = 'Test First' AND lastname = 'Test Last';
 	GET DIAGNOSTICS temp_count = ROW_COUNT;
 	deleted_count := deleted_count + temp_count;
 
 	-- OrderDetails: Remove test row
-	DELETE FROM ""orderdetails"" WHERE ""orderid"" = 10248 AND ""productid"" = 12 AND ""unitprice"" = 99.0000::money;
+	DELETE FROM orderdetails WHERE orderid = 10248 AND productid = 12 AND unitprice = 99.0000::money;
 	GET DIAGNOSTICS temp_count = ROW_COUNT;
 	deleted_count := deleted_count + temp_count;
 
 	-- Orders: Remove test row
-	DELETE FROM orders WHERE ""shipcity"" = 'Test City' AND ""shipname"" = 'Test Name';
+	DELETE FROM orders WHERE shipcity = 'Test City' AND shipname = 'Test Name';
 	GET DIAGNOSTICS temp_count = ROW_COUNT;
 	deleted_count := deleted_count + temp_count;
 
 	-- Products: Remove test row
-	DELETE FROM products WHERE ""productname"" = 'Test Product' AND ""quantityperunit"" = 'lots';
+	DELETE FROM products WHERE productname = 'Test Product' AND quantityperunit = 'lots';
 	GET DIAGNOSTICS temp_count = ROW_COUNT;
 	deleted_count := deleted_count + temp_count;
 
@@ -118,7 +118,7 @@ BEGIN
 	deleted_count := deleted_count + temp_count;
 
 	-- Suppliers: Remove test row
-	DELETE FROM suppliers WHERE ""companyname"" = 'Test Company' AND ""contacttitle"" = 'Test Title';
+	DELETE FROM suppliers WHERE companyname = 'Test Company' AND contacttitle = 'Test Title';
 	GET DIAGNOSTICS temp_count = ROW_COUNT;
 	deleted_count := deleted_count + temp_count;
 
