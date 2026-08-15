@@ -27,7 +27,7 @@ runtime:
           expect(resBody).to.have.property("buildVersion");
           expect(resBody).to.have.property("deployDate");
           expect(resBody).to.have.property("name");
-          expect(resBody.name).to.contain("PilotApi");
+          expect(resBody.name).to.contain("PilotUtilityApiDotNet");
         });
 
 settings:

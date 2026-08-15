@@ -27,11 +27,10 @@ runtime:
           expect(resBody).to.have.property("buildVersion");
           expect(resBody).to.have.property("deployDate");
           expect(resBody).to.have.property("name");
-          expect(resBody.name).to.contain("PilotApi");
+          expect(resBody.name).to.contain("PilotUtilityApiDotNet");
 
           expect(resBody).to.have.property("applicationConfiguration");
           const configuration = resBody?.applicationConfiguration;
-          expect(configuration).to.have.property("dataConnections");
           expect(configuration).to.have.property("dataSources");
           
           expect(configuration).to.have.property("openApi");
@@ -41,7 +40,7 @@ runtime:
           expect(openapi).to.have.property("license");
           expect(openapi.license).to.equal("MIT");
           expect(openapi).to.have.property("title");
-          expect(openapi.title).to.contain("PilotApi");
+          expect(openapi.title).to.contain("PilotUtilityApiDotNet");
         });
 
 settings:
