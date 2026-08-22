@@ -1,9 +1,11 @@
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using PilotUtilityApi.Repositories.Repositories;
 using PilotUtilityApi.Shared.Configuration;
 using PilotUtilityApi.Shared.Configuration.Models;
 using PilotUtilityApi.Shared.Exceptions;
+using PilotUtilityApi.TestingShared.Utilities;
 using System;
 using System.Threading.Tasks;
 
@@ -17,12 +19,14 @@ namespace PilotUtilityApi.Repositories.Tests.Repositories
 		[Test]
 		public void TestingRepository_Constructor_WithNullConfiguration_ThrowsArgumentNullException_Test()
 		{
-			Assert.Throws<ArgumentNullException>(() => new TestingRepository(null!));
+			var loggerFactory = TestingSharedDoublesUtilities.GetMockLoggerFactory();
+			Assert.Throws<ArgumentNullException>(() => new TestingRepository(loggerFactory, null!));
 		}
 
 		[Test]
 		public void TestingRepository_Constructor_WithValidConfiguration_DoesNotThrow_Test()
 		{
+			var loggerFactory = TestingSharedDoublesUtilities.GetMockLoggerFactory();
 			var mockConfig = new Mock<IApplicationConfiguration>();
 			mockConfig.Setup(c => c.DataSources).Returns(
 				[
@@ -40,7 +44,7 @@ namespace PilotUtilityApi.Repositories.Tests.Repositories
 					}
 				]);
 
-			Assert.DoesNotThrow(() => new TestingRepository(mockConfig.Object));
+			Assert.DoesNotThrow(() => new TestingRepository(loggerFactory, mockConfig.Object));
 		}
 
 		[Test]
@@ -58,7 +62,8 @@ namespace PilotUtilityApi.Repositories.Tests.Repositories
 					}
 				]);
 
-			var repository = new TestingRepository(mockConfig.Object);
+			var loggerFactory = TestingSharedDoublesUtilities.GetMockLoggerFactory();
+			var repository = new TestingRepository(loggerFactory, mockConfig.Object);
 
 			var result = await repository.ResetTestingAsync();
 
@@ -73,7 +78,8 @@ namespace PilotUtilityApi.Repositories.Tests.Repositories
 			var mockConfig = new Mock<IApplicationConfiguration>();
 			mockConfig.Setup(c => c.DataSources).Returns([]);
 
-			var repository = new TestingRepository(mockConfig.Object);
+			var loggerFactory = TestingSharedDoublesUtilities.GetMockLoggerFactory();
+			var repository = new TestingRepository(loggerFactory, mockConfig.Object);
 
 			var result = await repository.ResetTestingAsync();
 
@@ -93,7 +99,7 @@ namespace PilotUtilityApi.Repositories.Tests.Repositories
 						Active = true,
 						DataSourceType = "UnsupportedDb",
 						Host = "localhost",
-						DataSource = "TestDb",
+						DataSource = "SqlServer",
 						Port = 1234,
 						UserName = "user",
 						Password = "password",
@@ -101,7 +107,8 @@ namespace PilotUtilityApi.Repositories.Tests.Repositories
 					}
 				]);
 
-			var repository = new TestingRepository(mockConfig.Object);
+			var loggerFactory = TestingSharedDoublesUtilities.GetMockLoggerFactory();
+			var repository = new TestingRepository(loggerFactory, mockConfig.Object);
 
 			Assert.ThrowsAsync<UserException>(async () => await repository.ResetTestingAsync());
 		}

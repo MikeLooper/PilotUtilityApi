@@ -4,7 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PilotUtilityApi.Shared.Api.Middleware;
 using PilotUtilityApi.Shared.Logging.Extensions;
-using Scalar.AspNetCore;
+using PilotUtilityApi.Shared.OpenApi.Extensions;
+using PilotUtilityApi.Shared.OpenTelemetry.Extensions;
+using PilotUtilityApi.Shared.Swagger.Extensions;
 using System;
 
 namespace PilotUtilityApi.Shared.Api.Extensions
@@ -67,24 +69,14 @@ namespace PilotUtilityApi.Shared.Api.Extensions
 			}
 
 			// custom
+			webApp.OpenApiWebApplication();
 			webApp.LoggingWebApplication();
+			webApp.SwaggerWebApplication();
+
 			webApp.UseMiddleware<UnhandledExceptionMiddleware>();
 
 			// standard
-			webApp.MapOpenApi();
-			webApp.MapScalarApiReference(options =>
-			{
-				options.Layout = ScalarLayout.Classic;
-			});
-
-			try
-			{
-				webApp.MapControllers();
-			}
-			catch (InvalidOperationException)
-			{
-				// Controllers not registered; skip mapping
-			}
+			webApp.MapControllers();
 		}
 
 		/// <summary>
@@ -119,6 +111,8 @@ namespace PilotUtilityApi.Shared.Api.Extensions
 
 			// custom
 			builder.LoggingWebApplicationBuilder();
+			builder.OpenTelemetryWebApplicationBuilder();
+			builder.OpenApiWebApplicationBuilder();
 		}
 	}
 }
