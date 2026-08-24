@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PilotUtilityApi.Services.Services;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PilotUtilityApi.Web.Controllers
@@ -32,6 +33,9 @@ namespace PilotUtilityApi.Web.Controllers
 		/// <summary>
 		/// Resets testing data in the database by removing test records.
 		/// </summary>
+		/// <param name="cancellationToken">
+		/// A token that can be used to cancel the operation.
+		/// </param>
 		/// <returns>
 		/// An <see cref="IActionResult"/> containing:
 		/// - 200 OK with the count of deleted rows if successful and rows were deleted.
@@ -43,9 +47,9 @@ namespace PilotUtilityApi.Web.Controllers
 		[ProducesResponseType<int>(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
-		public async Task<IActionResult> ResetTesting()
+		public async Task<IActionResult> ResetTesting(CancellationToken cancellationToken)
 		{
-			var response = await testingService.ResetTestingAsync();
+			var response = await testingService.ResetTestingAsync(cancellationToken);
 
 			if (response.IsError)
 			{

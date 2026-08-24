@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using PilotUtilityApi.Domain.Models.Responses;
@@ -16,15 +17,17 @@ namespace PilotUtilityApi.Services.Tests.Services
 		[Test]
 		public void TestingService_Constructor_WithNullRepository_ThrowsArgumentNullException_Test()
 		{
-			Assert.Throws<ArgumentNullException>(() => new TestingService(null!));
+			var loggerFactory = new Mock<ILoggerFactory>();
+			Assert.Throws<ArgumentNullException>(() => new TestingService(loggerFactory.Object, null!));
 		}
 
 		[Test]
 		public void TestingService_Constructor_WithValidRepository_DoesNotThrow_Test()
 		{
 			var mockRepository = new Mock<ITestingRepository>();
+			var loggerFactory = new Mock<ILoggerFactory>();
 
-			Assert.DoesNotThrow(() => new TestingService(mockRepository.Object));
+			Assert.DoesNotThrow(() => new TestingService(loggerFactory.Object, mockRepository.Object));
 		}
 
 		[Test]
@@ -35,7 +38,8 @@ namespace PilotUtilityApi.Services.Tests.Services
 			mockRepository.Setup(r => r.ResetTestingAsync())
 				.ReturnsAsync(expectedResult);
 
-			var service = new TestingService(mockRepository.Object);
+			var loggerFactory = new Mock<ILoggerFactory>();
+			var service = new TestingService(loggerFactory.Object, mockRepository.Object);
 
 			var result = await service.ResetTestingAsync();
 
@@ -54,7 +58,8 @@ namespace PilotUtilityApi.Services.Tests.Services
 			mockRepository.Setup(r => r.ResetTestingAsync())
 				.ReturnsAsync(expectedResult);
 
-			var service = new TestingService(mockRepository.Object);
+			var loggerFactory = new Mock<ILoggerFactory>();
+			var service = new TestingService(loggerFactory.Object, mockRepository.Object);
 
 			var result = await service.ResetTestingAsync();
 
@@ -73,7 +78,8 @@ namespace PilotUtilityApi.Services.Tests.Services
 			mockRepository.Setup(r => r.ResetTestingAsync())
 				.ReturnsAsync(expectedResult);
 
-			var service = new TestingService(mockRepository.Object);
+			var loggerFactory = new Mock<ILoggerFactory>();
+			var service = new TestingService(loggerFactory.Object, mockRepository.Object);
 
 			var result = await service.ResetTestingAsync();
 
@@ -91,7 +97,8 @@ namespace PilotUtilityApi.Services.Tests.Services
 			mockRepository.Setup(r => r.ResetTestingAsync())
 				.ReturnsAsync(expectedResult);
 
-			var service = new TestingService(mockRepository.Object);
+			var loggerFactory = new Mock<ILoggerFactory>();
+			var service = new TestingService(loggerFactory.Object, mockRepository.Object);
 
 			var result = await service.ResetTestingAsync();
 

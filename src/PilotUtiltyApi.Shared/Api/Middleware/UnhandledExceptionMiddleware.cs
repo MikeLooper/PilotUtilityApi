@@ -47,6 +47,11 @@ namespace PilotUtilityApi.Shared.Api.Middleware
 			}
 			catch (UserException uExc)
 			{
+				if (context.Response.HasStarted)
+				{
+					throw;
+				}
+
 				// already logged, update response with error message for the user
 				context.Response.ContentType = "application/json";
 				context.Response.StatusCode = StatusCodes.Status500InternalServerError;

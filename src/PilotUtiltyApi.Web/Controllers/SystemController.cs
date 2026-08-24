@@ -7,7 +7,6 @@ using PilotUtilityApi.Domain.Models.Dto;
 using PilotUtilityApi.Shared.Configuration;
 using PilotUtilityApi.Shared.Utilities;
 using System;
-using System.Threading.Tasks;
 
 namespace PilotUtilityApi.Web.Controllers
 {
@@ -36,7 +35,7 @@ namespace PilotUtilityApi.Web.Controllers
 		protected IApplicationConfiguration ApplicationConfiguration { get; }
 
 		/// <summary>
-		/// Return an OK.
+		/// Return an OK to indicate endpoint (and API) is available.
 		/// </summary>
 		/// <returns>
 		/// A read only list of all DTO objects from the category table, or null if no objects exist.
@@ -44,7 +43,7 @@ namespace PilotUtilityApi.Web.Controllers
 		[HttpGet]
 		[Route("healthcheck")]
 		[ProducesResponseType<string>(StatusCodes.Status200OK)]
-		public async Task<IActionResult?> GetAll()
+		public IActionResult HealthCheck()
 		{
 			return this.Ok("OK");
 		}
@@ -67,7 +66,7 @@ namespace PilotUtilityApi.Web.Controllers
 			var name = this.ApplicationConfiguration.OpenApi.Title;
 			var appVersion = this.ApplicationConfiguration.OpenApi.Version;
 			var buildVersion = FileUtilities.GetApplicationVersion();
-			var deployDate = Environment.GetEnvironmentVariable("DEPLOY_DATE");
+			var deployDate = Environment.GetEnvironmentVariable("APP_DEPLOY_DATE");
 
 			var aboutResponse = new AboutResponse
 			{

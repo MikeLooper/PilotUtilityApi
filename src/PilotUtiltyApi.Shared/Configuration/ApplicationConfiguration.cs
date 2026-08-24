@@ -47,7 +47,7 @@ namespace PilotUtilityApi.Shared.Configuration
 		/// </summary>
 		public OpenApiConfiguration OpenApi { get; set; } = new OpenApiConfiguration();
 
-		/// <inheritdoc/>>
+		/// <inheritdoc/>
 		public override string ToString()
 		{
 			return $"{nameof(this.DataSources)}=[{this.DataSources}], " +
@@ -115,13 +115,11 @@ namespace PilotUtilityApi.Shared.Configuration
 				throw new ArgumentException($"Invalid argument: {nameof(sourceConfiguration)}");
 			}
 
-#pragma warning disable CS8601 // Possible null reference assignment.
 			this.DataSources = sourceConfiguration.DataSources
 				?.Select(s => new DataSourceConfiguration(s, suppressSensitiveValues))
-				.ToList();
-#pragma warning restore CS8601 // Possible null reference assignment.
+				.ToList() ?? new List<DataSourceConfiguration>();
 
-			this.OpenApi = new OpenApiConfiguration(sourceConfiguration.OpenApi, suppressSensitiveValues);
+			this.OpenApi = new OpenApiConfiguration(sourceConfiguration.OpenApi);
 		}
 	}
 }

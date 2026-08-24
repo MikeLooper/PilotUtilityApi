@@ -13,7 +13,7 @@ namespace PilotUtilityApi.Shared.Utilities
 		/// <returns></returns>
 		public static string GetApplicationVersion()
 		{
-			var assembly = System.Reflection.Assembly.GetEntryAssembly();
+			var assembly = System.Reflection.Assembly.GetEntryAssembly() ?? System.Reflection.Assembly.GetExecutingAssembly();
 			var versionAttribute = assembly.GetCustomAttributes(typeof(System.Reflection.AssemblyInformationalVersionAttribute), false)
 				.FirstOrDefault() as System.Reflection.AssemblyInformationalVersionAttribute;
 			return versionAttribute?.InformationalVersion ?? "Unknown";

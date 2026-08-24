@@ -1,15 +1,16 @@
 using Dapper;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Logging;
 using Npgsql;
 using PilotUtilityApi.Domain.Models.Responses;
 using PilotUtilityApi.Repositories.Constants;
 using PilotUtilityApi.Shared.Configuration;
 using PilotUtilityApi.Shared.Exceptions;
 using PilotUtilityApi.Shared.Logging;
-using Serilog;
 using System;
 using System.Data;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PilotUtilityApi.Repositories.Repositories
@@ -24,22 +25,36 @@ namespace PilotUtilityApi.Repositories.Repositories
 		/// <summary>
 		/// Initializes a new instance of the <see cref="TestingRepository"/> class.
 		/// </summary>
+		/// <param name="loggerFactory">
+		/// A factory for creating logger instances. This is used for logging information, warnings, and errors.
+		/// </param>
 		/// <param name="applicationConfiguration">
 		/// The application configuration.
 		/// </param>
-		public TestingRepository(IApplicationConfiguration applicationConfiguration)
+		public TestingRepository(
+			ILoggerFactory loggerFactory,
+			IApplicationConfiguration applicationConfiguration)
 		{
+			this.Logger = loggerFactory.CreateLogger(GetType());
 			this.applicationConfiguration = applicationConfiguration ?? throw new ArgumentNullException(nameof(applicationConfiguration));
 		}
 
 		/// <summary>
+		/// Gets the logger instance for logging information, warnings, and errors.
+		/// </summary>
+		protected ILogger Logger { get; }
+
+		/// <summary>
 		/// Resets testing data in the database by removing test records.
 		/// </summary>
+		/// <param name="cancellationToken">
+		/// A token that can be used to cancel the operation.
+		/// </param>
 		/// <returns>
 		/// A <see cref="RetrieveResponse{TReturn}"/> containing the count of deleted rows,
 		/// or an error message if the operation fails.
 		/// </returns>
-		public async Task<RetrieveResponse<int>> ResetTestingAsync()
+		public async Task<RetrieveResponse<int>> ResetTestingAsync(CancellationToken cancellationToken = default)
 		{
 			try
 			{
@@ -53,9 +68,29 @@ namespace PilotUtilityApi.Repositories.Repositories
 				string connectionString = BuildConnectionString(activeDataSource);
 				string sqlScript = GetResetScript(activeDataSource.DataSourceType);
 
-				using IDbConnection connection = CreateConnection(activeDataSource.DataSourceType, connectionString);
+				var connection = CreateConnection(activeDataSource.DataSourceType, connectionString);
+				if (connection.State != ConnectionState.Open)
+				{
+					connection.Open();
+				}
+					
+				var transaction = connection.BeginTransaction();
 
-				var result = await connection.QueryFirstOrDefaultAsync<int>(sqlScript);
+				var command = new CommandDefinition(
+					sqlScript,
+					transaction: transaction,
+					cancellationToken: cancellationToken);
+
+				int result = -1;
+				try
+				{
+					result = await connection.QueryFirstOrDefaultAsync<int>(command);
+				}
+				finally
+				{
+					transaction.Rollback();
+					connection.Close();
+				}
 
 				return new RetrieveResponse<int>(result);
 			}
@@ -63,7 +98,7 @@ namespace PilotUtilityApi.Repositories.Repositories
 			{
 				var correlationId = LoggingUtilities.GetLoggingCorrelation();
 
-				Log.Error(ex,
+				this.Logger.LogError(ex,
 					"Error occurred in {ClassName}.{MethodName}. CorrelationId: {CorrelationId}",
 					nameof(TestingRepository),
 					nameof(ResetTestingAsync),

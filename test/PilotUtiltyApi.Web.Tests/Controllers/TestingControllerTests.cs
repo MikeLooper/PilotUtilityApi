@@ -39,7 +39,7 @@ namespace PilotUtilityApi.Web.Tests.Controllers
 
 			var controller = new TestingController(mockService.Object);
 
-			var result = await controller.ResetTesting();
+			var result = await controller.ResetTesting(default);
 
 			Assert.That(result, Is.InstanceOf<OkObjectResult>());
 			var okResult = result as OkObjectResult;
@@ -59,7 +59,7 @@ namespace PilotUtilityApi.Web.Tests.Controllers
 
 			var controller = new TestingController(mockService.Object);
 
-			var result = await controller.ResetTesting();
+			var result = await controller.ResetTesting(default);
 
 			Assert.That(result, Is.InstanceOf<NoContentResult>());
 			var noContentResult = result as NoContentResult;
@@ -79,7 +79,7 @@ namespace PilotUtilityApi.Web.Tests.Controllers
 
 			var controller = new TestingController(mockService.Object);
 
-			var result = await controller.ResetTesting();
+			var result = await controller.ResetTesting(default);
 
 			Assert.That(result, Is.InstanceOf<NoContentResult>());
 			mockService.Verify(s => s.ResetTestingAsync(), Times.Once);
@@ -100,7 +100,7 @@ namespace PilotUtilityApi.Web.Tests.Controllers
 				HttpContext = new DefaultHttpContext()
 			};
 
-			var result = await controller.ResetTesting();
+			var result = await controller.ResetTesting(default);
 
 			Assert.That(result, Is.InstanceOf<BadRequestResult>());
 			var badRequestResult = result as BadRequestResult;
@@ -126,7 +126,7 @@ namespace PilotUtilityApi.Web.Tests.Controllers
 				HttpContext = new DefaultHttpContext()
 			};
 
-			var result = await controller.ResetTesting();
+			var result = await controller.ResetTesting(default);
 
 			Assert.That(result, Is.InstanceOf<BadRequestResult>());
 			Assert.That(controller.Response.Headers.ContainsKey("Warning"), Is.True);
@@ -143,7 +143,7 @@ namespace PilotUtilityApi.Web.Tests.Controllers
 
 			var controller = new TestingController(mockService.Object);
 
-			var result = await controller.ResetTesting();
+			var result = await controller.ResetTesting(default);
 
 			Assert.That(result, Is.InstanceOf<OkObjectResult>());
 			var okResult = result as OkObjectResult;
