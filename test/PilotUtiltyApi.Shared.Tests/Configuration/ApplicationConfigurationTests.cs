@@ -184,6 +184,12 @@ namespace PilotUtilityApi.Shared.Tests.Configuration
 				{
 					Title = "Test API",
 					Version = "1.0.0"
+				},
+				OpenTelemetry = new OpenTelemetryConfiguration
+				{
+					Active = true,
+					Port = 4317,
+					Server = "localhost"
 				}
 			};
 
