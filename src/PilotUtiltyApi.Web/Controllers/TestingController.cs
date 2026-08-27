@@ -12,9 +12,10 @@ namespace PilotUtilityApi.Web.Controllers
 	/// <summary>
 	/// A controller for testing management operations.
 	/// </summary>
-	[ApiVersionNeutral]
-	[AllowAnonymous]
 	[ApiController]
+	[ApiVersion("1.0")]
+	[Route("v{version:apiVersion}/[controller]")]
+	[AllowAnonymous]
 	public class TestingController : ControllerBase
 	{
 		private readonly ITestingService testingService;
@@ -43,7 +44,7 @@ namespace PilotUtilityApi.Web.Controllers
 		/// - 400 BadRequest with a Warning header if an error occurred.
 		/// </returns>
 		[HttpPost]
-		[Route("testing/reset")]
+		[Route("reset")]
 		[ProducesResponseType<int>(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]

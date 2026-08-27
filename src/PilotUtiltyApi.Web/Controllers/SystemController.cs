@@ -13,9 +13,9 @@ namespace PilotUtilityApi.Web.Controllers
 	/// <summary>
 	/// A controller for system processing.
 	/// </summary>
+	[ApiController]
 	[ApiVersionNeutral]
 	[AllowAnonymous]
-	[ApiController]
 	public class SystemController : ControllerBase
 	{
 		/// <summary>

@@ -3,7 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Npgsql;
-using OpenTelemetry;
 using OpenTelemetry.Exporter;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
@@ -25,6 +24,9 @@ namespace PilotUtilityApi.Shared.OpenTelemetry.Extensions
 		/// <param name="builder">
 		/// A <see cref="WebApplicationBuilder"/> object.
 		/// </param>
+		/// <param name="serviceProvider">
+		/// A <see cref="IServiceProvider"/> object.
+		/// </param>
 		/// <example>
 		/// Example usage:
 		/// <code>
@@ -35,7 +37,7 @@ namespace PilotUtilityApi.Shared.OpenTelemetry.Extensions
 		/// webAppBuilder.OpenTelemetryWebApplicationBuilder();
 		/// </code>
 		/// </example>
-		public static void OpenTelemetryWebApplicationBuilder(this WebApplicationBuilder builder)
+		public static void OpenTelemetryWebApplicationBuilder(this WebApplicationBuilder builder, IServiceProvider serviceProvider)
 		{
 			if (builder == null)
 			{
@@ -43,7 +45,6 @@ namespace PilotUtilityApi.Shared.OpenTelemetry.Extensions
 					+ $"A valid object type of: '{typeof(WebApplicationBuilder)}' is needed to continue. ({nameof(OpenTelemetryExtensions)})");
 			}
 
-			var serviceProvider = builder.Services.BuildServiceProvider();
 			var applicationConfiguration = serviceProvider.GetRequiredService<IApplicationConfiguration>();
 
 			// Confirmed via curl: the collector's OTLP/HTTP receiver on this port serves
