@@ -5,7 +5,7 @@ info:
 
 http:
   method: POST
-  url: "{{Host}}testing/reset"
+  url: "{{Host}}v{{version}}/{{controller}}/reset"
   auth: inherit
 
 settings:
@@ -13,3 +13,4 @@ settings:
   timeout: 0
   followRedirects: true
   maxRedirects: 5
+  forwardAuthorizationHeader: true

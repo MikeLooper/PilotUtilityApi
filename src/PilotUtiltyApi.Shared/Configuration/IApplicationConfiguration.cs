@@ -19,6 +19,11 @@ namespace PilotUtilityApi.Shared.Configuration
 		OpenApiConfiguration OpenApi { get; }
 
 		/// <summary>
+		/// Gets or sets an object with Open Telemetry settings.
+		/// </summary>
+		OpenTelemetryConfiguration? OpenTelemetry { get; set; }
+
+		/// <summary>
 		/// Validates the configuration.
 		/// </summary>
 		void Validate();

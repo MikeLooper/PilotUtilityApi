@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using PilotUtilityApi.Shared.Configuration.Models;
 using PilotUtilityApi.Shared.Exceptions;
 using System;
@@ -18,6 +19,7 @@ namespace PilotUtilityApi.Shared.Configuration
 		{
 			this.DataSources = new List<DataSourceConfiguration>();
 			this.OpenApi = new OpenApiConfiguration();
+			this.OpenTelemetry = new OpenTelemetryConfiguration();
 		}
 
 		/// <summary>
@@ -48,10 +50,14 @@ namespace PilotUtilityApi.Shared.Configuration
 		public OpenApiConfiguration OpenApi { get; set; } = new OpenApiConfiguration();
 
 		/// <inheritdoc/>
+		public OpenTelemetryConfiguration? OpenTelemetry { get; set; }
+
+		/// <inheritdoc/>
 		public override string ToString()
 		{
 			return $"{nameof(this.DataSources)}=[{this.DataSources}], " +
-				$"{nameof(this.OpenApi)}=[{this.OpenApi}]";
+				$"{nameof(this.OpenApi)}=[{this.OpenApi}, " +
+				$"{nameof(this.OpenTelemetry)}=[{this.OpenTelemetry}]]";
 		}
 
 		/// <summary>
@@ -95,6 +101,16 @@ namespace PilotUtilityApi.Shared.Configuration
 			{
 				throw new ConfigurationException("Active data source must have a DataSource (database name) specified.");
 			}
+
+			if (this.OpenTelemetry == null)
+			{
+				throw new ConfigurationException(
+						$"The {nameof(this.OpenTelemetry)} property is required and cannot be null or empty ({this.GetType().Name})");
+			}
+			else
+			{
+				this.OpenTelemetry.Validate();
+			}
 		}
 
 		/// <summary>
@@ -120,6 +136,7 @@ namespace PilotUtilityApi.Shared.Configuration
 				.ToList() ?? new List<DataSourceConfiguration>();
 
 			this.OpenApi = new OpenApiConfiguration(sourceConfiguration.OpenApi);
+			this.OpenTelemetry = new OpenTelemetryConfiguration(sourceConfiguration.OpenTelemetry);
 		}
 	}
 }
