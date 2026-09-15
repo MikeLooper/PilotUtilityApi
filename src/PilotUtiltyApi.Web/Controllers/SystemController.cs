@@ -67,10 +67,20 @@ namespace PilotUtilityApi.Web.Controllers
 			var appVersion = this.ApplicationConfiguration.OpenApi.Version;
 			var buildVersion = FileUtilities.GetApplicationVersion();
 			var deployDate = Environment.GetEnvironmentVariable("APP_DEPLOY_DATE");
+			var activeDataSource = this.ApplicationConfiguration.DataSources?.Find(ds => ds.Active);
+			var databaseName = activeDataSource?.DataSourceType?.Trim();
+			var databaseIndicator = string.Equals(databaseName, "SqlServer", StringComparison.OrdinalIgnoreCase)
+				? "SQL Server"
+				: string.Equals(databaseName, "PostgreSQL", StringComparison.OrdinalIgnoreCase)
+					? "PostgreSQL"
+					: databaseName;
+			var nameWithDatabase = string.IsNullOrWhiteSpace(databaseIndicator)
+				? name
+				: $"{name} ({databaseIndicator})";
 
 			var aboutResponse = new AboutResponse
 			{
-				Name = name,
+				Name = nameWithDatabase,
 				ApiVersion = appVersion,
 				BuildVersion = buildVersion,
 				DeployDate = deployDate,

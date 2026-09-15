@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PilotUtilityApi.Shared.Exceptions;
 using PilotUtilityApi.Shared.Logging;
@@ -47,26 +48,43 @@ namespace PilotUtilityApi.Shared.Api.Middleware
 			}
 			catch (UserException uExc)
 			{
+				// already logged, update response with error message for the user
 				if (context.Response.HasStarted)
 				{
 					throw;
 				}
 
-				// already logged, update response with error message for the user
+				var problemDetails = new ProblemDetails
+				{
+					Status = StatusCodes.Status500InternalServerError,
+					Title = "Internal Server Error",
+					Detail = uExc.Message,
+					Instance = context.Request.Path
+				};
+		
 				context.Response.ContentType = "application/json";
-				context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+				context.Response.StatusCode = problemDetails.Status.Value;
 
-				var errorPayload = new { message = uExc.Message };
-				await context.Response.WriteAsJsonAsync(errorPayload);
+				await context.Response.WriteAsJsonAsync(problemDetails);
 			}
 			catch (Exception exception)
 			{
+				// unhandled and unlogged
 				var loggingCorrelation = LoggingUtilities.GetLoggingCorrelation();
 				this.logger.LogError(exception, "{UserMessage}", loggingCorrelation.UserMessage);
 
-				throw new UserException(
-					$"An error occurred. The details can be found in the log with the following correlation ID: {loggingCorrelation.CorrelationId}",
-					exception);
+				var problemDetails = new ProblemDetails
+				{
+					Status = StatusCodes.Status500InternalServerError,
+					Title = "Internal Server Error",
+					Detail = loggingCorrelation.UserMessage,
+					Instance = context.Request.Path
+				};
+		
+				context.Response.ContentType = "application/json";
+				context.Response.StatusCode = problemDetails.Status.Value;
+
+				await context.Response.WriteAsJsonAsync(problemDetails);
 			}
 		}
 	}
