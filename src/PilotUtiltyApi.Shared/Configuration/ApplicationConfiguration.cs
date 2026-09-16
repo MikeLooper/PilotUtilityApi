@@ -136,7 +136,9 @@ namespace PilotUtilityApi.Shared.Configuration
 				.ToList() ?? new List<DataSourceConfiguration>();
 
 			this.OpenApi = new OpenApiConfiguration(sourceConfiguration.OpenApi);
-			this.OpenTelemetry = new OpenTelemetryConfiguration(sourceConfiguration.OpenTelemetry);
+			this.OpenTelemetry = sourceConfiguration.OpenTelemetry != null
+				? new OpenTelemetryConfiguration(sourceConfiguration.OpenTelemetry)
+				: new OpenTelemetryConfiguration();
 		}
 	}
 }

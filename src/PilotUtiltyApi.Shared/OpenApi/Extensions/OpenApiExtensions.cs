@@ -75,17 +75,17 @@ namespace PilotUtilityApi.Shared.OpenApi.Extensions
 			{
 				foreach (var description in apiDescriptions.ApiVersionDescriptions)
 				{
-					// get list of controllers for this version
-					var versionControllers = new List<ControllerAttributes>();
-					foreach (var controller in controllerClasses)
-					{
-						var apiVersionAttribute = controller.Type?.GetCustomAttribute<ApiVersionAttribute>();
-						if (apiVersionAttribute != null && 
-							apiVersionAttribute.Versions.Any(v => v.MajorVersion == description.ApiVersion.MajorVersion))
-						{
-							versionControllers.Add(controller);
-						}
-					}
+					//// get list of controllers for this version
+					//var versionControllers = new List<ControllerAttributes>();
+					//foreach (var controller in controllerClasses)
+					//{
+					//	var apiVersionAttribute = controller.Type?.GetCustomAttribute<ApiVersionAttribute>();
+					//	if (apiVersionAttribute != null && 
+					//		apiVersionAttribute.Versions.Any(v => v.MajorVersion == description.ApiVersion.MajorVersion))
+					//	{
+					//		versionControllers.Add(controller);
+					//	}
+					//}
 
 					builder.Services.AddOpenApi($"v{description.ApiVersion.MajorVersion}", options =>
 					{

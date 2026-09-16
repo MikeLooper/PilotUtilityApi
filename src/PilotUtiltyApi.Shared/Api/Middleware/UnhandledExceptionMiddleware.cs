@@ -73,6 +73,11 @@ namespace PilotUtilityApi.Shared.Api.Middleware
 				var loggingCorrelation = LoggingUtilities.GetLoggingCorrelation();
 				this.logger.LogError(exception, "{UserMessage}", loggingCorrelation.UserMessage);
 
+				if (context.Response.HasStarted)
+				{
+					throw;
+				}
+				
 				var problemDetails = new ProblemDetails
 				{
 					Status = StatusCodes.Status500InternalServerError,
