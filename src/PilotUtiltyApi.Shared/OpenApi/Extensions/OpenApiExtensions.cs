@@ -99,6 +99,7 @@ namespace PilotUtilityApi.Shared.OpenApi.Extensions
 						var xmlFilename = $"{Assembly.GetEntryAssembly().GetName().Name}.xml";
 						var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFilename);
 						options.AddOperationTransformer(new ManualXmlCommentsOperationTransformer(xmlPath));
+						options.AddSchemaTransformer(new ManualXmlCommentsSchemaTransformer(xmlPath));
 					});
 				}
 			}			
