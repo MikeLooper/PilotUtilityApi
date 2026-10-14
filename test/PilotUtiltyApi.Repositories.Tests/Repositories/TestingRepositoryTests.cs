@@ -89,7 +89,7 @@ namespace PilotUtilityApi.Repositories.Tests.Repositories
 		}
 
 		[Test]
-		public void TestingRepository_ResetTestingAsync_WithUnsupportedDataSourceType_ThrowsUserException_Test()
+		public async Task TestingRepository_ResetTestingAsync_WithUnsupportedDataSourceType_ThrowsUserException_TestAsync()
 		{
 			var mockConfig = new Mock<IApplicationConfiguration>();
 			mockConfig.Setup(c => c.DataSources).Returns(
@@ -110,7 +110,7 @@ namespace PilotUtilityApi.Repositories.Tests.Repositories
 			var loggerFactory = TestingSharedDoublesUtilities.GetMockLoggerFactory();
 			var repository = new TestingRepository(loggerFactory, mockConfig.Object);
 
-			_ = Assert.ThrowsAsync<UserException>(async () => await repository.ResetTestingAsync());
+			_ = await Assert.ThrowsAsync<UserException>(async () => await repository.ResetTestingAsync());
 		}
 	}
 }
