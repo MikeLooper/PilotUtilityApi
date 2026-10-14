@@ -58,7 +58,7 @@ namespace PilotUtilityApi.Shared.Configuration.Models
 				throw new ConfigurationException($"The {nameof(this.Server)} value is required and cannot be null or empty ({this.GetType().Name})");
 			}
 
-			if (this.Port <= 0)
+			if (!this.Port.HasValue || this.Port <= 0)
 			{
 				throw new ConfigurationException($"The {nameof(this.Port)} value is required and must be greater than zero ({this.GetType().Name})");
 			}

@@ -76,11 +76,10 @@ namespace PilotUtilityApi.Shared.Api.Extensions
 			}
 
 			// custom
+			webApp.UseMiddleware<UnhandledExceptionMiddleware>();
 			webApp.OpenApiWebApplication();
 			webApp.LoggingWebApplication();
 			webApp.SwaggerWebApplication();
-
-			webApp.UseMiddleware<UnhandledExceptionMiddleware>();
 
 			// standard
 			webApp.MapControllers();

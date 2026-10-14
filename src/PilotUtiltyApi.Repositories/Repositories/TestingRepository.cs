@@ -56,6 +56,8 @@ namespace PilotUtilityApi.Repositories.Repositories
 		/// </returns>
 		public async Task<RetrieveResponse<int>> ResetTestingAsync(CancellationToken cancellationToken = default)
 		{
+			var loggingCorrelation = LoggingUtilities.GetLoggingCorrelation();
+
 			try
 			{
 				var activeDataSource = applicationConfiguration.DataSources.FirstOrDefault(ds => ds.Active);
@@ -85,26 +87,48 @@ namespace PilotUtilityApi.Repositories.Repositories
 				try
 				{
 					result = await connection.QueryFirstOrDefaultAsync<int>(command);
+					if (result == 0)
+					{
+						transaction.Commit();
+
+					}
+					else
+					{
+						transaction.Rollback();
+					}
+				}
+				catch (Exception exInner)
+				{
+					transaction.Rollback();
+
+					this.Logger.LogError(exInner,
+						"Error occurred in {ClassName}.{MethodName}. CorrelationId: {CorrelationId}",
+						nameof(TestingRepository),
+						nameof(ResetTestingAsync),
+						loggingCorrelation.CorrelationId);
+
+					throw new UserException(loggingCorrelation.UserMessage);
 				}
 				finally
 				{
-					transaction.Rollback();
 					connection.Close();
 				}
 
 				return new RetrieveResponse<int>(result);
 			}
+			catch (UserException)
+			{
+				throw;
+			}
 			catch (Exception ex)
 			{
-				var correlationId = LoggingUtilities.GetLoggingCorrelation();
-
 				this.Logger.LogError(ex,
 					"Error occurred in {ClassName}.{MethodName}. CorrelationId: {CorrelationId}",
 					nameof(TestingRepository),
 					nameof(ResetTestingAsync),
-					correlationId.CorrelationId);
+					loggingCorrelation.CorrelationId);
 
-				throw new UserException(correlationId.UserMessage);
+				throw new UserException(loggingCorrelation.UserMessage);
 			}
 		}
 
