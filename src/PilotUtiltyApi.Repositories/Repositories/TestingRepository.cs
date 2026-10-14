@@ -87,15 +87,7 @@ namespace PilotUtilityApi.Repositories.Repositories
 				try
 				{
 					result = await connection.QueryFirstOrDefaultAsync<int>(command);
-					if (result == 0)
-					{
-						transaction.Commit();
-
-					}
-					else
-					{
-						transaction.Rollback();
-					}
+					transaction.Commit();
 				}
 				catch (Exception exInner)
 				{
