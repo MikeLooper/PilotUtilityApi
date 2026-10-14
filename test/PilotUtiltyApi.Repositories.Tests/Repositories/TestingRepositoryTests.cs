@@ -110,7 +110,7 @@ namespace PilotUtilityApi.Repositories.Tests.Repositories
 			var loggerFactory = TestingSharedDoublesUtilities.GetMockLoggerFactory();
 			var repository = new TestingRepository(loggerFactory, mockConfig.Object);
 
-			Assert.ThrowsAsync<UserException>(async () => await repository.ResetTestingAsync());
+			_ = Assert.ThrowsAsync<UserException>(async () => await repository.ResetTestingAsync());
 		}
 	}
 }
