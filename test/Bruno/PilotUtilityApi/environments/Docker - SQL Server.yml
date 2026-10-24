@@ -1,5 +1,5 @@
 name: Docker - SQL Server
 variables:
   - name: Host
-    value: http://localhost:55701/
+    value: http://localhost:11601/
     description: ""
